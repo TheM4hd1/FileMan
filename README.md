@@ -10,7 +10,7 @@
 * Video Player
 * Image Viewer
 * PDF/Document Reader
-* Decompresser (_under developing_)
+* Decompresser (zip)
 
 ## Thank You
 
