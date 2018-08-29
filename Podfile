@@ -6,5 +6,5 @@ target 'FileMan' do
   use_frameworks!
 
   # Pods for FileMan
-  
+  pod 'Zip'
 end

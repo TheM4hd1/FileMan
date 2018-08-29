@@ -8,6 +8,7 @@
 
 import UIKit
 import QuickLook
+import Zip
 
 class FileManagerController: UITableViewController {
     
@@ -111,6 +112,38 @@ extension FileManagerController {
             currentPath = url
             NotificationCenter.default.post(name: Configs.shared.CURRENT_PATH_CHANGED_NOTIF, object: nil)
             refreshFileManager(at: url)
+        } else if url.pathExtension == "zip" {
+            let alert = UIAlertController(title: "Unzip", message: "Enter password or Leave it empty.", preferredStyle: .alert)
+            alert.addTextField { (textField) in
+                textField.placeholder = "Enter Password or Leave it Blank"
+            }
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak alert] (_) in
+                let textField = alert?.textFields![0] // Force unwrapping because we know it exists.
+                guard let password = textField?.text else { return }
+                if password.count > 0 { // Password
+                    do {
+                        let filePath = url
+                        try Zip.unzipFile(filePath, destination: self.currentPath!, overwrite: true, password: password)
+                        self.refreshFileManager(at: self.currentPath!)
+                    } catch {
+                        let alert = UIAlertController(title: "Error", message: "Wrong Password.", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        self.refreshFileManager(at: self.currentPath!)
+                    }
+                } else { // No Password
+                    do {
+                        let filePath = url
+                        try Zip.quickUnzipFile(filePath) // Unzip
+                        self.refreshFileManager(at: self.currentPath!)
+                    }
+                    catch {
+                        print(error.localizedDescription)
+                    }
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .destructive, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         } else {
             // Directory Files
             let nsurl = NSURL(fileURLWithPath: url.absoluteString)
