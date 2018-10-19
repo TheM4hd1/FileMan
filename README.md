@@ -2,9 +2,9 @@
 
 ### Demo
 
-
-![](https://github.com/TheM4hd1/FileMan/blob/master/Screenshots/Demo.gif)
-
+<p align="center">
+    <img src="https://github.com/TheM4hd1/FileMan/blob/master/Screenshots/Demo.gif" alt="Image" width="200" height="400" />
+</p>
 
 ## Features:
 
