@@ -1,5 +1,11 @@
 **FileMan** is a `File Downloader` and `File Manager` for iOS Devices By **Swift 4**.
 
+### Demo
+
+
+![](https://github.com/TheM4hd1/FileMan/blob/master/Screenshots/Demo.gif)
+
+
 ## Features:
 
 * Supports multiple file downloading
